@@ -1,0 +1,49 @@
+import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.BUILD-SNAPSHOT'
+    }
+    repositories {
+        mavenCentral()
+        // To allow to pull in milestone releases from Spring
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE")
+
+    }
+}
+
+apply plugin: 'java'
+apply plugin: SpringBootPlugin
+apply plugin: DependencyManagementPlugin
+
+
+repositories {
+    mavenCentral()
+
+    // To allow to pull in milestone releases from Spring
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/libs-snapshot' }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
+
+    compile 'org.slf4s:slf4s-api_2.12:1.7.25'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.boot:spring-boot-starter-json'
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:2.+"
+}
