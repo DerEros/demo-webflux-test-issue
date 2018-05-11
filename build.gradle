@@ -3,7 +3,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
     ext {
-        springBootVersion = '2.1.0.BUILD-SNAPSHOT'
+        springBootVersion = '2.0.2.RELEASE'
     }
     repositories {
         mavenCentral()
