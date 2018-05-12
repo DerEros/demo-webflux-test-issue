@@ -1,15 +1,17 @@
 package com.example.integration;
 
-import com.example.ReverserService;
+import com.example.*;
 import com.example.model.ReverserResult;
+import com.example.serializer.ReverserResultSerializer;
 import com.fasterxml.jackson.databind.Module;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -18,8 +20,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureWebTestClient
+@WebFluxTest
+@AutoConfigureWebClient
+@Import({SerializerConfig.class, ReverserResultSerializer.class, ReverserRoutes.class, ReverseHandler.class, ReverserConfig.class})
 public class ReverserRouteTest {
     @MockBean
     public ReverserService mockReverserService;
